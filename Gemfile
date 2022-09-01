@@ -15,7 +15,8 @@ gem "dotenv"
 gem "parser"
 
 group :test, :development do
-  # TODO: add rubocop
+  gem "rubocop", require: false
+  gem "rubocop-rspec"
 end
 
 group :test do
