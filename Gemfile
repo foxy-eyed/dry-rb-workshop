@@ -14,6 +14,8 @@ gem "dotenv"
 # fitness functions
 gem "parser"
 
+gem "rake"
+
 group :test, :development do
   gem "rubocop", require: false
   gem "rubocop-rspec"
