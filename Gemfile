@@ -11,6 +11,9 @@ gem "zeitwerk"
 # load env variables
 gem "dotenv"
 
+# fitness functions
+gem "parser"
+
 group :test, :development do
   # TODO: add rubocop
 end
