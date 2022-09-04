@@ -5,7 +5,7 @@ Sequel.migration do
     create_table(:inspections) do
       primary_key :id, type: :Bignum
       foreign_key :account_id, :accounts, type: Bignum
-      foreign_key :cat_toy_id, :accounts, type: Bignum
+      foreign_key :cat_toy_id, :cat_toys, type: Bignum
       String :status, null: false, default: "pending"
       String :characteristics
 

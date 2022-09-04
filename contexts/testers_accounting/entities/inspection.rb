@@ -2,7 +2,7 @@
 
 module TestersAccounting
   module Entities
-    class InspectionEntity < Dry::Struct
+    class Inspection < Dry::Struct
       transform_keys(&:to_sym)
 
       attribute :id, TestersAccounting::Types::Integer
