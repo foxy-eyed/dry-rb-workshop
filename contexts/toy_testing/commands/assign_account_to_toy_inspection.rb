@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module TestersAccounting
+module ToyTesting
   module Commands
     class AssignAccountToToyInspection
       include Dry::Monads[:result]
       include Dry::Monads::Do.for(:call)
 
       include Import[
-        account_repo: "contexts.testers_accounting.repositories.account",
-        cat_toy_repo: "contexts.testers_accounting.repositories.cat_toy",
-        inspection_repo: "contexts.testers_accounting.repositories.inspection",
+        account_repo: "contexts.toy_testing.repositories.account",
+        cat_toy_repo: "contexts.toy_testing.repositories.cat_toy",
+        inspection_repo: "contexts.toy_testing.repositories.inspection",
       ]
 
       MAX_INSPECTION_QUEUE_SIZE = 3

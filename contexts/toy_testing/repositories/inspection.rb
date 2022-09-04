@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module TestersAccounting
+module ToyTesting
   module Repositories
     class Inspection
       include Import[db: "persistence.db"]
@@ -42,7 +42,7 @@ module TestersAccounting
       end
 
       def map_to_entity(raw_attributes)
-        TestersAccounting::Entities::Inspection.new(prepare(raw_attributes))
+        ToyTesting::Entities::Inspection.new(prepare(raw_attributes))
       end
 
       def prepare(row)

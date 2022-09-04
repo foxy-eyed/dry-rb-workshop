@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module TestersAccounting
+module ToyTesting
   module Queries
     class PendingInspectionsForAccount
       include Dry::Monads[:result]
       include Dry::Monads::Do.for(:call)
 
       include Import[
-        account_repo: "contexts.testers_accounting.repositories.account",
-        inspection_repo: "contexts.testers_accounting.repositories.inspection",
+        account_repo: "contexts.toy_testing.repositories.account",
+        inspection_repo: "contexts.toy_testing.repositories.inspection",
       ]
 
       def call(account_id:)
