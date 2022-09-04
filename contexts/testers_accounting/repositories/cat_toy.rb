@@ -14,6 +14,10 @@ module TestersAccounting
         !cat_toys.where(id: id).empty?
       end
 
+      def tested?(id:)
+        db[:inspections].where(cat_toy_id: id, status: "ready").count.positive?
+      end
+
       private
 
       def cat_toys

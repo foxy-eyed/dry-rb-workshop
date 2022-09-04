@@ -4,6 +4,8 @@ module TestersAccounting
   module Types
     include Dry.Types()
 
+    Id = Integer.constrained(gt: 0)
+
     # Types for account
     AccountName = String.constrained(min_size: 2, max_size: 255)
     AccountEmail = String.constrained(format: URI::MailTo::EMAIL_REGEXP)
@@ -19,8 +21,8 @@ module TestersAccounting
     InspectionCharacteristic = Types::Hash.schema(
       characteristic_type: InspectionCharacteristicType,
       value: InspectionCharacteristicValue,
-      comment: String.optional,
-      will_recommend: Bool
+      comment?: String,
+      will_recommend: Bool.default(true)
     )
     InspectionCharacteristics = Array.of(InspectionCharacteristic)
   end
