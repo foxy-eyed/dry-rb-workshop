@@ -11,11 +11,13 @@ module TestersAccounting
       end
 
       def queue_size_for_account(account_id:)
-        queue_for_account(account_id: account_id).count
+        inspections.where(account_id: account_id, status: "pending").count
       end
 
       def queue_for_account(account_id:)
-        inspections.where(account_id: account_id, status: "pending").order(:created_at)
+        inspections.where(account_id: account_id, status: "pending").order(:created_at).map do |row|
+          map_to_entity(row)
+        end
       end
 
       def assign_to_account!(account_id:, cat_toy_id:)
