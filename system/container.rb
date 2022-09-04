@@ -31,8 +31,7 @@ class Container < Dry::System::Container
       dir.memoize = true
 
       dir.auto_register = proc do |component|
-        !component.identifier.include?("entities") &&
-        !component.identifier.include?("types")
+        !component.identifier.include?("entities") && !component.identifier.include?("types")
       end
 
       dir.namespaces.add "testers_accounting", key: "contexts.testers_accounting"
