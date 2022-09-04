@@ -3,7 +3,7 @@
 Sequel.migration do
   up do
     create_table(:cat_toys) do
-      primary_key :id, type: :Bignum
+      primary_key :id, type: :Integer
       String :name, null: false
     end
   end
