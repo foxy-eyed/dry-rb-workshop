@@ -9,10 +9,10 @@ Container.register_provider(:db) do
 
   start do
     db = Sequel.postgres(
-      host: ENV.fetch("DB_HOST", "localhost"),
-      user: ENV["DB_USER"],
-      password: ENV["DB_PASSWORD"],
-      database: ENV.fetch("DB_NAME", "dry_rb_workshop_#{ENV['APP_ENV']}")
+      host: ENV.fetch("POSTGRES_HOST", "localhost"),
+      user: ENV["POSTGRES_USER"],
+      password: ENV["POSTGRES_PASSWORD"],
+      database: ENV.fetch("POSTGRES_DB", "dry_rb_workshop_#{ENV['APP_ENV']}")
     )
 
     register("persistence.db", db)

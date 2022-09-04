@@ -5,19 +5,22 @@ module TestersAccounting
     class Inspection
       include Import[db: "persistence.db"]
 
-      def queue_for_account(account_id:)
-        inspections.where(account_id: account_id, status: "pending").order(:created_at).map do |row|
-          map_to_entity(row)
-        end
+      def find(id:)
+        inspection = inspections.first(id: id)
+        map_to_entity(inspection) if inspection
       end
 
-      def assign_to_account(account_id:, cat_toy_id:)
+      def queue_size_for_account(account_id:)
+        queue_for_account(account_id: account_id).count
+      end
+
+      def queue_for_account(account_id:)
+        inspections.where(account_id: account_id, status: "pending").order(:created_at)
+      end
+
+      def assign_to_account!(account_id:, cat_toy_id:)
         inspection_id = inspections.insert(account_id: account_id, cat_toy_id: cat_toy_id)
         find(id: inspection_id)
-      end
-
-      def find(id:)
-        map_to_entity(inspections.first(id: id))
       end
 
       private

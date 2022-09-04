@@ -17,6 +17,9 @@ class Container < Dry::System::Container
 
   require "dry-struct"
 
+  require "dry/monads"
+  require "dry/monads/do"
+
   configure do |config|
     # libraries
     config.component_dirs.add "lib" do |dir|

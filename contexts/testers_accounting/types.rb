@@ -4,6 +4,13 @@ module TestersAccounting
   module Types
     include Dry.Types()
 
+    # Types for account
+    AccountName = String.constrained(min_size: 2, max_size: 255)
+    AccountEmail = String.constrained(format: URI::MailTo::EMAIL_REGEXP)
+
+    # Types for toys
+    CatToyName = String.constrained(min_size: 2, max_size: 255)
+
     # Types for inspection
     InspectionStatus = String.default("pending").enum("pending", "ready")
 
