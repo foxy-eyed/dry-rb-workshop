@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ToyTesting
+module TestersAccounting
   module Repositories
     class Account
       include Import[db: "persistence.db"]
@@ -10,6 +10,11 @@ module ToyTesting
         map_to_entity(account) if account
       end
 
+      def reward!(id:, score:)
+        accounts.where(id: id).update(score: score)
+        find(id: id)
+      end
+
       private
 
       def accounts
@@ -17,7 +22,7 @@ module ToyTesting
       end
 
       def map_to_entity(raw_attributes)
-        ToyTesting::Entities::Account.new(raw_attributes.compact)
+        TestersAccounting::Entities::Account.new(raw_attributes.compact)
       end
     end
   end

@@ -5,9 +5,9 @@ module ToyTesting
     class Inspection < Dry::Struct
       transform_keys(&:to_sym)
 
-      attribute :id, ToyTesting::Types::Integer
-      attribute :account_id, ToyTesting::Types::Integer
-      attribute :cat_toy_id, ToyTesting::Types::Integer
+      attribute :id, ToyTesting::Types::Id
+      attribute :account_id, ToyTesting::Types::Id
+      attribute :cat_toy_id, ToyTesting::Types::Id
       attribute :status, ToyTesting::Types::InspectionStatus
       attribute? :characteristics, ToyTesting::Types::InspectionCharacteristics
     end

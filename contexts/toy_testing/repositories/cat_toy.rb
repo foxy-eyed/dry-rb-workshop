@@ -10,10 +10,6 @@ module ToyTesting
         map_to_entity(cat_toy) if cat_toy
       end
 
-      def exists?(id:)
-        !cat_toys.where(id: id).empty?
-      end
-
       def tested?(id:)
         db[:inspections].where(cat_toy_id: id, status: "ready").count.positive?
       end

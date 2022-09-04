@@ -5,7 +5,7 @@ module ToyTesting
     class Account < Dry::Struct
       transform_keys(&:to_sym)
 
-      attribute :id, ToyTesting::Types::Integer
+      attribute :id, ToyTesting::Types::Id
       attribute :name, ToyTesting::Types::AccountName
       attribute :email, ToyTesting::Types::AccountEmail
     end
