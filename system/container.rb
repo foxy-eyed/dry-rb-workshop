@@ -8,6 +8,15 @@ class Container < Dry::System::Container
   use :env, inferrer: -> { ENV.fetch("APP_ENV", :development).to_sym }
   use :zeitwerk
 
+  # --- Dry-rb requirements ---
+  require "dry-types"
+  Dry::Types.load_extensions(:monads)
+
+  require "dry-schema"
+  Dry::Schema.load_extensions(:monads)
+
+  require "dry-struct"
+
   configure do |config|
     # libraries
     config.component_dirs.add "lib" do |dir|
