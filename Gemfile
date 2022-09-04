@@ -11,6 +11,12 @@ gem "zeitwerk"
 # load env variables
 gem "dotenv"
 
+# persistence layer
+gem "dry-struct", "1.0"
+gem "dry-types", "1.5"
+gem "pg"
+gem "sequel"
+
 # fitness functions
 gem "parser"
 
