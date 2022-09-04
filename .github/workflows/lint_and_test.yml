@@ -2,9 +2,14 @@ name: Lint and test
 
 on: [push]
 
+env:
+  POSTGRES_DB: dry_rb_workshop
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
 jobs:
   lint:
-    name: Lint
+    name: Lint and test
 
     runs-on: ubuntu-latest
 
@@ -12,9 +17,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: dry_rb_workshop
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
         ports:
           - 5432:5432
         options:
@@ -31,48 +36,14 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Install PostgreSQL client
-        run: |
-          apt-get update
-          apt-get install --yes postgresql-client
-
       - name: Prepare DB
         run: bundle exec rake db:migrate
 
       - name: Run linters
         run: bundle exec rake lint
 
-  rspec:
-    name: Rspec
-
-    runs-on: ubuntu-latest
-
-    env:
-      APP_ENV: test
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+      - name: Check cross-context calls
+        run: bundle exec rake fitness_functions
 
       - name: Run Rspec
         run: bundle exec rspec
-
-  cross-context-calls-check:
-    name: Check cross-context calls
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - name: Run check
-        run: bundle exec rake fitness_functions
