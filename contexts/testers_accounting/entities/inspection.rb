@@ -12,7 +12,7 @@ module TestersAccounting
       attribute? :characteristics, TestersAccounting::Types::InspectionCharacteristics
 
       def discarded?
-        characteristics.nil?
+        status == "ready" && characteristics.nil?
       end
     end
   end
