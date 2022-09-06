@@ -13,11 +13,12 @@ module TestersAccounting
 
       PER_INSPECTION_REWARD = 1_000
 
-      def call(account_id:)
+      def call(account_id)
         account = yield find_account(account_id)
         score = yield collect_completed_inspections(account)
 
         reward_account!(account, score)
+        Success(account)
       end
 
       private
@@ -33,7 +34,7 @@ module TestersAccounting
       def collect_completed_inspections(account)
         inspections = inspection_repo.completed_by_account(account_id: account.id)
         if inspections.any?(&:discarded?)
-          Failure([:account_has_bad_tests], { account: account })
+          Failure([:account_has_bad_tests, { account: account }])
         else
           score = inspections.count * PER_INSPECTION_REWARD
           Success(score)
