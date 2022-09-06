@@ -17,8 +17,8 @@ module TestersAccounting
         account = yield find_account(account_id)
         score = yield collect_completed_inspections(account)
 
-        reward_account!(account, score)
-        Success(account)
+        rewarded = reward_account!(account, score)
+        Success(rewarded)
       end
 
       private

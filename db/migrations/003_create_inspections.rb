@@ -3,7 +3,7 @@
 Sequel.migration do
   up do
     create_table(:inspections) do
-      primary_key :id, type: :Integer
+      primary_key :id
       foreign_key :account_id, :accounts, type: Integer
       foreign_key :cat_toy_id, :cat_toys, type: Integer
       String :status, null: false, default: "pending"

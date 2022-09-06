@@ -84,4 +84,38 @@ RSpec.describe TestersAccounting::Commands::RewardAccount do
       expect(result.failure).to eq([:account_has_bad_tests, { account: account }])
     end
   end
+
+  context "with real objects" do
+    let(:command) { described_class.new }
+    let(:db) { Container["persistence.db"] }
+
+    before do
+      # prepare data
+      account_id = db[:accounts].insert(name: "Ivan", email: "ivan@mail.ru")
+      cat_toy_id = db[:cat_toys].insert(name: "Crazy fish")
+      db[:inspections].insert(
+        account_id: account_id,
+        cat_toy_id: cat_toy_id,
+        status: "ready",
+        characteristics: [{ characteristic_type: "brightness", value: "87654321", will_recommend: true }].to_json
+      )
+    end
+
+    after do
+      # drop data
+      db[:inspections].delete
+      db[:accounts].delete
+      db[:cat_toys].delete
+    end
+
+    it "works" do
+      account_id = db[:accounts].select(:id).order(:id).last[:id]
+      result = command.call(account_id)
+      account = TestersAccounting::Entities::Account.new(db[:accounts].where(id: account_id).first)
+
+      expect(result).to be_success
+      expect(result.value!).to eq(account)
+      expect(account.score).to eq(1000)
+    end
+  end
 end
