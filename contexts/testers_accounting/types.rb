@@ -4,7 +4,7 @@ module TestersAccounting
   module Types
     include Dry.Types()
 
-    Id = Integer.constrained(gt: 0)
+    Id = Params::Integer.constrained(gt: 0)
 
     # Types for inspection
     InspectionStatus = String.default("pending").enum("pending", "ready")
