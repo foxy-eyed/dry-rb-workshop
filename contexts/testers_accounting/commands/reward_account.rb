@@ -3,7 +3,7 @@
 module TestersAccounting
   module Commands
     class RewardAccount
-      include Dry::Monads[:result]
+      include Dry::Monads[:result, :try]
       include Dry::Monads::Do.for(:call)
 
       include Import[
@@ -17,8 +17,7 @@ module TestersAccounting
         account = yield find_account(account_id)
         score = yield collect_completed_inspections(account)
 
-        rewarded = reward_account!(account, score)
-        Success(rewarded)
+        reward_account!(account, score)
       end
 
       private
@@ -42,7 +41,11 @@ module TestersAccounting
       end
 
       def reward_account!(account, score)
-        account_repo.reward!(id: account.id, score: score)
+        Try[Sequel::Error] do
+          account_repo.reward!(id: account.id, score: score)
+        end.to_result.or(
+          Failure([:db_error])
+        )
       end
     end
   end

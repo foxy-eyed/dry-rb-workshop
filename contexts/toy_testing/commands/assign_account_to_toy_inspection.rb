@@ -3,7 +3,7 @@
 module ToyTesting
   module Commands
     class AssignAccountToToyInspection
-      include Dry::Monads[:result]
+      include Dry::Monads[:result, :try]
       include Dry::Monads::Do.for(:call)
 
       include Import[
@@ -42,8 +42,11 @@ module ToyTesting
           return Failure([:account_queue_overflow, { account: account, max_size: MAX_INSPECTION_QUEUE_SIZE }])
         end
 
-        inspection = inspection_repo.assign_to_account!(account_id: account.id, cat_toy_id: cat_toy.id)
-        Success(inspection)
+        Try[Sequel::Error] do
+          inspection_repo.assign_to_account!(account_id: account.id, cat_toy_id: cat_toy.id)
+        end.to_result.or(
+          Failure([:db_error])
+        )
       end
     end
   end

@@ -3,7 +3,7 @@
 module ToyTesting
   module Commands
     class CompleteInspection
-      include Dry::Monads[:result]
+      include Dry::Monads[:result, :try]
       include Dry::Monads::Do.for(:call)
 
       include Import[
@@ -49,9 +49,11 @@ module ToyTesting
 
       def complete_inspection!(account, toy, characteristics)
         if inspection_repo.account_assigned?(account_id: account.id, cat_toy_id: toy.id)
-          inspection = inspection_repo.complete!(account_id: account.id, cat_toy_id: toy.id,
-                                                 characteristics: characteristics)
-          Success(inspection)
+          Try[Sequel::Error] do
+            inspection_repo.complete!(account_id: account.id, cat_toy_id: toy.id, characteristics: characteristics)
+          end.to_result.or(
+            Failure([:db_error])
+          )
         else
           Failure([:account_not_assigned_to_toy, { account_id: account_id, cat_toy_id: toy_id }])
         end

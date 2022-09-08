@@ -85,7 +85,7 @@ RSpec.describe TestersAccounting::Commands::RewardAccount do
     end
   end
 
-  context "with real objects" do
+  context "with real dependencies" do
     let(:command) { described_class.new }
     let(:db) { Container["persistence.db"] }
 
