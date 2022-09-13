@@ -11,6 +11,16 @@ gem "zeitwerk"
 # load env variables
 gem "dotenv"
 
+# business logic section
+gem "dry-monads", "1.3"
+gem "dry-schema", "1.9"
+
+# persistence layer
+gem "dry-struct", "1.0"
+gem "dry-types", "1.5"
+gem "pg"
+gem "sequel"
+
 # fitness functions
 gem "parser"
 
